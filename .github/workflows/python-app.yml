@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -27,22 +27,26 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Custom Step - Say Hello
-      run: echo "Hello, GitHub Actions!"
+    - name: Print Hello
+      run: echo "Hello from GitHub Actions!"
 
     - name: Lint with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: GH Actions Push
-      uses: ad-m/github-push-action@v0.8.0
+    - name: Create a test file
+      run: echo "This file was created by GitHub Actions on $(date)" > test_output.txt
+
+    - name: Commit file
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add test_output.txt
+        git commit -m "Add test_output.txt via GitHub Actions" || echo "No changes to commit"
+
+    - name: Push changes to repo
+      uses: ad-m/github-push-action@v0.6.0
       with:
-        github_token: ${{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}}
+        github_token: ${{ secrets.MY_PERSONAL_TOKEN }}
         branch: main
-
-
-  #  - name: Test with pytest
-  #    run: |
-       # pytest
-
