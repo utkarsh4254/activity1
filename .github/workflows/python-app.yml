@@ -48,5 +48,5 @@ jobs:
     - name: Push changes to repo
       uses: ad-m/github-push-action@v0.6.0
       with:
-        github_token: ${{ secrets.MY_PERSONAL_TOKEN }}
+        github_token: ${{ MY_ACTION_TOKEN }}
         branch: main
