@@ -35,7 +35,7 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: GitHub Push
+    - name: GH Actions Push
       uses: ad-m/github-push-action@v0.8.0
       with:
         github_token: ${{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}}
