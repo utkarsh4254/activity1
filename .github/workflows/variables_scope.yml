@@ -1,0 +1,32 @@
+name: Variables Scope Demo
+
+  MY_WORKFLOW_VARIABLE:"This is a workflow-level variable"
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  demo-job:
+
+    env:
+      MY_JOB_VARIABLE: "This is a job-level variable"
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Print all variables in Step 1
+
+        env:
+          MY_STEP_VARIABLE: "This is a step-level variable"
+        run: |
+          echo "Workflow-level variable: $MY_WORKFLOW_VARIABLE"
+          echo "Job-level variable: $MY_JOB_VARIABLE"
+          echo "Step-level variable: $MY_STEP_VARIABLE"
+
+      - name: Print without step-level variable
+        run: |
+          echo "Workflow-level variable: $MY_WORKFLOW_VARIABLE"
+          echo "Job-level variable: $MY_JOB_VARIABLE"
+          echo "Step-level variable (should be empty): $MY_STEP_VARIABLE"
